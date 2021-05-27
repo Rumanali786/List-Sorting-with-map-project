@@ -10,26 +10,24 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  //giving initial Position latitude and longitude when app starts
+  //give initial Position latitude and longitude
   LatLng _initialPosition = LatLng(30.3894007, 69.3532207);
 
-  //using predefined function of location in package
+  //using predefined function of location package
   Location _location = Location();
 
   GoogleMapController _controller;
 
   //function for getting current location of user and updating it in realtime
-  void _onMapCreated(GoogleMapController _controll) {
-    _controller = _controll;
-    _location.onLocationChanged().listen((l) {
-      _controller.animateCamera(
-        CameraUpdate.newCameraPosition(
+  void _onMapCreated(GoogleMapController _controller) {
+    _controller = _controller;
+    _location.getLocation().then((l) => {
+    CameraUpdate.newCameraPosition(
           CameraPosition(
             target: LatLng(l.latitude, l.longitude),
             zoom: 15,
           ),
-        ),
-      );
+    )
     });
   }
 
@@ -49,6 +47,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xff0a81ab),
           centerTitle: true,
           title: Text(
             "ListView With Map",
